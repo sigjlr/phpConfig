@@ -9,37 +9,37 @@ class PhpConfig{
 	 *
 	 * @var array
 	 */
-    protected $config = array();
+	protected $config = array();
 
 	/**
 	 * Array of resources to load 
 	 *
 	 * @var array
 	 */
-    protected $resources = array();
+	protected $resources = array();
 	
 	
-    /**
+	/**
 	 * @param 
 	 */
-    public function __construct()
-    {
-        
-    }
+	public function __construct()
+	{
+	
+	}
 	
 	
-    /**
+	/**
 	 * Add a list of resource file to configuration.
 	 *
 	 * @param $string 
 	 */
-    public function addResource()
-    {
-        $params = func_get_args();
+	public function addResource()
+	{
+		$params = func_get_args();
 		foreach ($params as $param) {
 			$this->resources[] = $param;
 		}
-    }	
+	}	
 	
 	
 	/**
@@ -47,10 +47,10 @@ class PhpConfig{
 	 *
 	 * @param 
 	 */
-    public function getResource()
-    {
-        return $this->resources;
-    }	
+	public function getResource()
+	{
+		return $this->resources;
+	}	
 	
 	
 	/**
@@ -58,24 +58,24 @@ class PhpConfig{
 	 *
 	 * @param 
 	 */
-    public function getConfig()
-    {
-        return $this->config;
-    }	
+	public function getConfig()
+	{
+		return $this->config;
+	}	
 	
 	
 	/**
 	 * Load all resourced from the first and merge the resultant configuration
 	 */
-    public function load()
-    {
-        foreach ($this->resources as $resource) {
-            $resourceType = __NAMESPACE__.'\\Driver\\'.$this->identify($resource);
+	public function load()
+	{
+		foreach ($this->resources as $resource) {
+			$resourceType = __NAMESPACE__.'\\Driver\\'.$this->identify($resource);
 			$cr = new $resourceType($resource);
 			
 			$this->mergeConfig($cr->load());
-        }
-    }	
+		}
+	}	
 	
 	
 	/**
@@ -85,9 +85,9 @@ class PhpConfig{
 	 * 
 	 * @return string
 	 */
-    private function identify($resource)
-    {
-     	$current = explode('.', $resource);
+	private function identify($resource)
+	{
+		$current = explode('.', $resource);
 		$extension = $current[count($current)-1];
 		
 		$result = null;
@@ -100,7 +100,7 @@ class PhpConfig{
 				break;
 		}
 		return $result;
-    }
+	}
 	
 
 	/**
@@ -109,17 +109,17 @@ class PhpConfig{
 	 *
 	 * @param array $newconfig
 	 */
-    private function mergeConfig(array $newconfig)
-    {
-    	foreach ($newconfig as $key => $value) {
-    		if(isset($this->config[$key])){
-    			foreach ($newconfig[$key] as $k=> $v){
-    				$this->config[$key][$k] = $v;
-    			}
+	private function mergeConfig(array $newconfig)
+	{
+		foreach ($newconfig as $key => $value) {
+			if(isset($this->config[$key])){
+				foreach ($newconfig[$key] as $k=> $v){
+					$this->config[$key][$k] = $v;
+				}
 				unset ($newconfig[$key]);
-    		}
+			}
 		}
-     	$this->config = array_merge($this->config, $newconfig);
-    }
+		$this->config = array_merge($this->config, $newconfig);
+	}
 	
 }
