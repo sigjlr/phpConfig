@@ -21,3 +21,11 @@ $config->load();
 \\Get the configuration array
 $config->getConfig();
 ````
+
+If the .ini files must be fobidden by browser add this directive in .htaccess
+````
+<Files *.ini> 
+    Order deny,allow
+    Deny from all
+</Files>
+````
