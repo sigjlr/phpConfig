@@ -18,13 +18,13 @@ class PhpConfig{
 	 */
 	protected $resources = array();
 	
-	
+		
 	/**
 	 * @param 
 	 */
 	public function __construct()
 	{
-	
+
 	}
 	
 	
@@ -66,9 +66,14 @@ class PhpConfig{
 	
 	/**
 	 * Load all resourced from the first and merge the resultant configuration
+	 * 
+	 * @param bool $reverse if true resource array is reverted before config production
 	 */
-	public function load()
+	public function load($reverse = false)
 	{
+		if($reverse){
+			$this->resources = array_reverse($this->resources);
+		}
 		foreach ($this->resources as $resource) {
 			$resourceType = __NAMESPACE__.'\\Driver\\'.$this->identify($resource);
 			$cr = new $resourceType($resource);
@@ -96,7 +101,7 @@ class PhpConfig{
 				$result = 'Ini';
 				break;
 			default:
-				throw new Exception('Unknown resource type', 1);
+				throw new \Exception('Unknown resource type', 1);
 				break;
 		}
 		return $result;
@@ -121,5 +126,8 @@ class PhpConfig{
 		}
 		$this->config = array_merge($this->config, $newconfig);
 	}
+	
+	
+	
 	
 }
