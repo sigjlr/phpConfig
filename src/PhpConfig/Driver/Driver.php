@@ -16,4 +16,12 @@ interface Driver {
 	 * @return array
 	 */
 	public function load();
+	
+	
+	/**
+	 * Change the configuration file
+	 * 
+	 * @return
+	 */
+	public function save();
 }

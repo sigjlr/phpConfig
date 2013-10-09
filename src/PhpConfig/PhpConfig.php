@@ -84,6 +84,21 @@ class PhpConfig{
 	
 	
 	/**
+	 * Change the content fo the specified resource with the given data
+	 * 
+	 * @param string $resource the resource to modify 
+	 * @param array $data the array with the configuration key to modify
+	 * 
+	 */
+	public function editResource($resource, array $data)
+	{
+		$resourceType = __NAMESPACE__.'\\Driver\\'.$this->identify($resource);
+		$cr = new $resourceType($resource);
+		$cr->save($data);
+	}
+	
+	
+	/**
 	 * Return the type of resource
 	 *
 	 * @param string $resource
@@ -127,7 +142,5 @@ class PhpConfig{
 		$this->config = array_merge($this->config, $newconfig);
 	}
 	
-	
-	
-	
+
 }
