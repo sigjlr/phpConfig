@@ -23,5 +23,5 @@ interface Driver {
 	 * 
 	 * @return
 	 */
-	public function save();
+	public function save(array $newConfigData);
 }
